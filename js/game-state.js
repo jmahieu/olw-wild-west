@@ -171,16 +171,16 @@ const GameState = {
     return points;
   },
 
-  // Get all competing team members (for Blufshot cycling)
-  getCompetingMembers() {
-    const members = [];
+  // Get 1 representative per competing team (for Blufshot)
+  getBlufRepresentatives() {
+    const reps = [];
     this.competingTeams.forEach(teamId => {
       const team = getTeamById(this.teams, teamId);
-      if (team) {
-        team.members.forEach(m => members.push({ name: m, teamId: team.id, teamName: team.name }));
+      if (team && team.members.length > 0) {
+        reps.push({ name: team.members[0], teamId: team.id, teamName: team.name });
       }
     });
-    return members;
+    return reps;
   },
 
   // Reset game
