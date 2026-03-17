@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLW Wild West — Spelleider</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/host.css">
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+</head>
+<body class="host-body">
+
+  <!-- Header -->
+  <div class="host-header">
+    <h1>★ OLW Wild West ★</h1>
+    <div class="round-info" id="roundInfo">Sheriffs vs Outlaws</div>
+  </div>
+
+  <div class="host-main">
+
+    <!-- PHASE: Setup -->
+    <div id="setup-phase" class="phase-container active">
+      <div class="title-screen">
+        <h1>★ OLW Wild West ★</h1>
+        <p>Welkom, sheriffs! De outlaws zijn on the run.<br>Bewijs jezelf in de Wild West challenges!</p>
+        <button class="btn btn-rust btn-large" onclick="hostApp.revealTeams()">Teams Onthullen</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Team Reveal -->
+    <div id="teamReveal-phase" class="phase-container">
+      <h2 class="text-center mb-2">De Sheriff-Teams</h2>
+      <div class="teams-grid" id="teamsGrid"></div>
+      <div class="text-center mt-3">
+        <button class="btn btn-green btn-large" onclick="hostApp.startTeamNaming()">Kies Teamnamen</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Team Naming -->
+    <div id="teamNaming-phase" class="phase-container">
+      <h2 class="text-center mb-2">Kies je Teamnaam!</h2>
+      <p class="text-center">Open de app op je telefoon en voer je teamnaam in.</p>
+      <div class="teams-grid" id="namingGrid"></div>
+      <div class="text-center mt-3">
+        <button class="btn btn-rust btn-large" onclick="hostApp.startGame()">Start het Spel!</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Scoreboard / Round start -->
+    <div id="scoreboard-phase" class="phase-container">
+      <h2 class="text-center mb-2">Scorebord</h2>
+      <div class="scoreboard" id="scoreboardDisplay"></div>
+      <div class="text-center mt-3">
+        <button class="btn btn-rust btn-large" onclick="hostApp.nextRound()">Volgende Ronde</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Ranking Split -->
+    <div id="ranking-phase" class="phase-container">
+      <h2 class="text-center mb-2">Ronde <span id="roundNumber"></span></h2>
+      <div class="ranking-split">
+        <div class="competing-section">
+          <h2>⚔️ Strijden</h2>
+          <p>Deze teams moeten zich bewijzen!</p>
+          <div id="competingList"></div>
+        </div>
+        <div class="saloon-section">
+          <h2>🍺 Saloon</h2>
+          <p>Rust uit en gok op de uitkomst!</p>
+          <div id="saloonList"></div>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-gold btn-large" onclick="hostApp.showWheel()">Draai het Rad!</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Wheel -->
+    <div id="wheel-phase" class="phase-container">
+      <h2>Draai het Rad!</h2>
+      <div class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <canvas id="wheelCanvas" width="600" height="600"></canvas>
+      </div>
+      <p class="wheel-hint" id="wheelHint">Klik op SPATIE om te draaien!</p>
+    </div>
+
+    <!-- PHASE: Challenge Reveal -->
+    <div id="challengeReveal-phase" class="phase-container">
+      <div class="wanted-poster challenge-reveal" id="challengeReveal">
+        <div class="challenge-name" id="challengeName"></div>
+        <div class="challenge-desc" id="challengeDesc"></div>
+        <div class="mt-3" id="challengeActions"></div>
+      </div>
+    </div>
+
+    <!-- PHASE: Betting -->
+    <div id="betting-phase" class="phase-container">
+      <h2 class="text-center">Saloon-teams, plaats je gok!</h2>
+      <div class="countdown-timer" id="bettingTimer">30</div>
+      <div class="betting-display" id="bettingDisplay"></div>
+      <div class="text-center mt-2">
+        <button class="btn btn-rust" onclick="hostApp.lockBets()">Sluit Stemming</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Winner Selection -->
+    <div id="winner-phase" class="phase-container">
+      <h2 class="text-center mb-2">Wie heeft gewonnen?</h2>
+      <div class="winner-buttons" id="winnerButtons"></div>
+    </div>
+
+    <!-- PHASE: Score Reveal -->
+    <div id="scoreReveal-phase" class="phase-container">
+      <h2 class="text-center mb-2">Punten deze ronde</h2>
+      <div class="scoreboard" id="roundScoreDisplay"></div>
+      <div class="text-center mt-3">
+        <button class="btn btn-green btn-large" onclick="hostApp.showScoreboard()">Scorebord</button>
+      </div>
+    </div>
+
+    <!-- PHASE: Blufshot -->
+    <div id="blufshot-phase" class="phase-container">
+      <div class="blufshot-display">
+        <h2>Blufshot!</h2>
+        <p>Deelnemer: <strong id="blufParticipant"></strong></p>
+        <p id="blufTeamLabel"></p>
+        <div class="shot-glasses" id="shotGlasses">
+          <div class="shot-glass" data-shot="1"><span class="guess-count" id="guessCount1">0</span>1</div>
+          <div class="shot-glass" data-shot="2"><span class="guess-count" id="guessCount2">0</span>2</div>
+          <div class="shot-glass" data-shot="3"><span class="guess-count" id="guessCount3">0</span>3</div>
+          <div class="shot-glass" data-shot="4"><span class="guess-count" id="guessCount4">0</span>4</div>
+        </div>
+        <div class="mt-2" id="blufActions">
+          <button class="btn btn-rust" onclick="hostApp.lockBlufGuesses()">Sluit Gokken</button>
+        </div>
+        <div class="mt-2 hidden" id="blufRevealSection">
+          <p>Welk shotje was tequila?</p>
+          <div style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem;">
+            <button class="btn" onclick="hostApp.revealBlufShot(1)">Shot 1</button>
+            <button class="btn" onclick="hostApp.revealBlufShot(2)">Shot 2</button>
+            <button class="btn" onclick="hostApp.revealBlufShot(3)">Shot 3</button>
+            <button class="btn" onclick="hostApp.revealBlufShot(4)">Shot 4</button>
+          </div>
+        </div>
+        <div class="mt-3 hidden" id="blufNextSection">
+          <div id="blufRoundScore"></div>
+          <button class="btn btn-green" id="blufNextBtn" onclick="hostApp.nextBlufParticipant()">Volgende Deelnemer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE: Winkel van Sinkel -->
+    <div id="winkel-phase" class="phase-container">
+      <div class="wanted-poster" style="max-width:700px;margin:2rem auto;">
+        <div style="font-size:2rem;color:#8B0000;font-family:'Rye',cursive;">Winkel van Sinkel</div>
+        <p class="mt-2" style="font-size:1.2rem;">Drankjes worden uitgeschonken! Teams kiezen op volgorde van ranking.</p>
+        <div id="winkelOrder" class="mt-2"></div>
+        <div class="mt-3">
+          <button class="btn btn-green" onclick="hostApp.finishExtra()">Klaar!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE: Duel -->
+    <div id="duel-phase" class="phase-container">
+      <div class="wanted-poster" style="max-width:700px;margin:2rem auto;">
+        <div style="font-size:2rem;color:#8B0000;font-family:'Rye',cursive;">⚔️ Duel ⚔️</div>
+        <p class="mt-2" style="font-size:1.2rem;">Het team dat dit gekozen heeft mag een ander team uitdagen!</p>
+        <div id="duelContent" class="mt-2"></div>
+        <div class="mt-3">
+          <button class="btn btn-green" onclick="hostApp.finishExtra()">Klaar!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE: Final Results -->
+    <div id="results-phase" class="phase-container">
+      <h2 class="text-center mb-2" style="font-size:2.5rem;color:#8B0000;">Eindresultaat!</h2>
+      <div class="podium" id="podium"></div>
+      <div class="scoreboard mt-3" id="finalScoreboard"></div>
+    </div>
+
+  </div>
+
+  <!-- Host controls bar -->
+  <div class="host-controls" id="hostControls">
+    <button class="btn" onclick="hostApp.showScoreboard()">Scorebord</button>
+    <button class="btn btn-rust" onclick="hostApp.showResults()">Eindstand</button>
+    <button class="btn" onclick="hostApp.resetConfirm()" style="background:#666;">Reset</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/challenges.js"></script>
+  <script src="js/teams.js"></script>
+  <script src="js/scoreboard.js"></script>
+  <script src="js/wheel.js"></script>
+  <script src="js/game-state.js"></script>
+  <script src="js/host-app.js"></script>
+</body>
+</html>

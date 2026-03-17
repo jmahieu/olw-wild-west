@@ -1,0 +1,233 @@
+/* === OLW Wild West — Western Theme === */
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Vollkorn:wght@400;600;700&display=swap');
+
+:root {
+  --sand: #F4E8C1;
+  --leather: #8B4513;
+  --rust: #C1440E;
+  --dark-wood: #3E2723;
+  --gold: #DAA520;
+  --cream: #FFF8DC;
+  --saloon-green: #2E5339;
+  --sky-blue: #87CEEB;
+  --parchment: #f5e6c8;
+  --blood-red: #8B0000;
+
+  /* Team colors */
+  --team1: #C1440E;
+  --team2: #2E5339;
+  --team3: #4A6FA5;
+  --team4: #DAA520;
+  --team5: #7B2D8E;
+  --team6: #1A5276;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Vollkorn', Georgia, serif;
+  background-color: var(--sand);
+  color: var(--dark-wood);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Rye', cursive;
+  color: var(--leather);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+
+/* Parchment card */
+.card {
+  background: var(--cream);
+  border: 3px solid var(--leather);
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* Western button */
+.btn {
+  font-family: 'Rye', cursive;
+  background: var(--leather);
+  color: var(--cream);
+  border: 3px solid var(--dark-wood);
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+}
+
+.btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+}
+
+.btn-rust {
+  background: var(--rust);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--dark-wood);
+}
+
+.btn-green {
+  background: var(--saloon-green);
+}
+
+.btn-large {
+  font-size: 1.5rem;
+  padding: 1rem 3rem;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* Wanted poster */
+.wanted-poster {
+  background: var(--parchment);
+  border: 6px double var(--dark-wood);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.25);
+}
+
+.wanted-poster::before {
+  content: '★ WANTED ★';
+  display: block;
+  font-family: 'Rye', cursive;
+  font-size: 2rem;
+  color: var(--blood-red);
+  margin-bottom: 1rem;
+  letter-spacing: 4px;
+}
+
+/* Sheriff badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  font-family: 'Rye', cursive;
+  font-size: 0.8rem;
+  color: var(--dark-wood);
+}
+
+/* Score display */
+.score {
+  font-family: 'Rye', cursive;
+  font-size: 2rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 var(--dark-wood);
+}
+
+/* Team color classes */
+.team-color-1 { background-color: var(--team1); color: white; }
+.team-color-2 { background-color: var(--team2); color: white; }
+.team-color-3 { background-color: var(--team3); color: white; }
+.team-color-4 { background-color: var(--team4); color: var(--dark-wood); }
+.team-color-5 { background-color: var(--team5); color: white; }
+.team-color-6 { background-color: var(--team6); color: white; }
+
+/* Fade transitions */
+.phase-container {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.phase-container.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes scoreCount {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); color: var(--gold); }
+  100% { transform: scale(1); }
+}
+
+/* Saloon doors animation */
+.saloon-doors {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 100;
+  perspective: 800px;
+}
+
+.saloon-door-left, .saloon-door-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--leather);
+  border: 8px solid var(--dark-wood);
+  transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.saloon-door-left {
+  left: 0;
+  transform-origin: left center;
+}
+
+.saloon-door-right {
+  right: 0;
+  transform-origin: right center;
+}
+
+.saloon-doors.open .saloon-door-left {
+  transform: rotateY(90deg);
+}
+
+.saloon-doors.open .saloon-door-right {
+  transform: rotateY(-90deg);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--sand); }
+::-webkit-scrollbar-thumb { background: var(--leather); border-radius: 4px; }
+
+/* Utility */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.hidden { display: none !important; }

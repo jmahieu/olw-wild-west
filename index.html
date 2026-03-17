@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLW Wild West</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at bottom, #d4a56a 0%, transparent 60%),
+        linear-gradient(to bottom, #87CEEB 0%, #F4E8C1 50%, #d4a56a 100%);
+    }
+    .landing {
+      text-align: center;
+      max-width: 600px;
+      padding: 2rem;
+    }
+    .landing h1 {
+      font-size: 3.5rem;
+      color: #8B0000;
+      text-shadow: 4px 4px 0 #3E2723;
+      margin-bottom: 0.5rem;
+    }
+    .landing .subtitle {
+      font-family: 'Rye', cursive;
+      font-size: 1.3rem;
+      color: #8B4513;
+      margin-bottom: 2.5rem;
+    }
+    .role-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .role-btn {
+      width: 280px;
+      padding: 1.5rem 2rem;
+      font-size: 1.4rem;
+    }
+    .role-btn .role-desc {
+      display: block;
+      font-family: 'Vollkorn', serif;
+      font-size: 0.85rem;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: 0.3rem;
+      opacity: 0.8;
+    }
+    .outlaw-text {
+      font-family: 'Rye', cursive;
+      font-size: 1rem;
+      color: #3E2723;
+      margin-top: 2rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="landing">
+    <h1>OLW Wild West</h1>
+    <p class="subtitle">Sheriffs vs Outlaws</p>
+
+    <div class="role-buttons">
+      <a href="host.html" class="btn btn-rust role-btn">
+        Spelleider
+        <span class="role-desc">Projectiescherm voor de host</span>
+      </a>
+      <a href="player.html" class="btn btn-green role-btn">
+        Speler
+        <span class="role-desc">Open op je telefoon om te stemmen</span>
+      </a>
+    </div>
+
+    <p class="outlaw-text">★ De outlaws zijn on the run... ★</p>
+  </div>
+</body>
+</html>
