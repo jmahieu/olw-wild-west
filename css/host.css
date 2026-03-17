@@ -1,0 +1,484 @@
+/* === Host Screen (Projector) Layout === */
+body.host-body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at bottom, #d4a56a 0%, transparent 60%),
+    linear-gradient(to bottom, #87CEEB 0%, #F4E8C1 50%, #d4a56a 100%);
+}
+
+.host-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--dark-wood);
+  color: var(--cream);
+  border-bottom: 4px solid var(--gold);
+}
+
+.host-header h1 {
+  font-size: 1.8rem;
+  color: var(--gold);
+  margin: 0;
+}
+
+.host-header .round-info {
+  font-family: 'Rye', cursive;
+  font-size: 1.2rem;
+  color: var(--sand);
+}
+
+.host-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Setup phase */
+#setup-phase .title-screen {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+#setup-phase .title-screen h1 {
+  font-size: 4rem;
+  color: var(--blood-red);
+  text-shadow: 4px 4px 0 var(--dark-wood);
+  margin-bottom: 1rem;
+}
+
+#setup-phase .title-screen p {
+  font-size: 1.5rem;
+  color: var(--leather);
+  margin-bottom: 2rem;
+}
+
+/* Team reveal */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.team-card {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 6px;
+  animation: popIn 0.5s ease backwards;
+}
+
+.team-card h3 {
+  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.team-card .team-name-display {
+  font-family: 'Rye', cursive;
+  font-size: 1.6rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  min-height: 2rem;
+}
+
+.team-card .members {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+}
+
+.team-card .team-score {
+  font-family: 'Rye', cursive;
+  font-size: 2rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  margin-top: 0.5rem;
+}
+
+/* Wheel phase */
+#wheel-phase {
+  text-align: center;
+}
+
+.wheel-container {
+  position: relative;
+  display: inline-block;
+  margin: 1rem auto;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 40px solid var(--blood-red);
+  z-index: 10;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+}
+
+.wheel-hint {
+  font-family: 'Rye', cursive;
+  font-size: 1.5rem;
+  color: var(--leather);
+  margin-top: 1rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Challenge result */
+.challenge-reveal {
+  max-width: 700px;
+  margin: 2rem auto;
+  animation: popIn 0.5s ease;
+}
+
+.challenge-reveal .challenge-name {
+  font-size: 2.5rem;
+  color: var(--blood-red);
+  margin: 1rem 0;
+}
+
+.challenge-reveal .challenge-desc {
+  font-size: 1.2rem;
+  color: var(--dark-wood);
+}
+
+/* Ranking split */
+.ranking-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.competing-section, .saloon-section {
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.competing-section {
+  background: rgba(193, 68, 14, 0.1);
+  border: 3px solid var(--rust);
+}
+
+.competing-section h2 {
+  color: var(--rust);
+}
+
+.saloon-section {
+  background: rgba(46, 83, 57, 0.1);
+  border: 3px solid var(--saloon-green);
+}
+
+.saloon-section h2 {
+  color: var(--saloon-green);
+}
+
+.ranking-team {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  transition: all 0.5s ease;
+}
+
+.ranking-team .rank {
+  font-family: 'Rye', cursive;
+  font-size: 1.5rem;
+  min-width: 40px;
+}
+
+.ranking-team .team-info {
+  flex: 1;
+}
+
+.ranking-team .points {
+  font-family: 'Rye', cursive;
+  font-size: 1.3rem;
+  color: var(--gold);
+}
+
+/* Betting phase */
+.betting-display {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.vote-bar-container {
+  margin: 1.5rem 0;
+}
+
+.vote-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.vote-bar {
+  height: 50px;
+  background: var(--cream);
+  border: 3px solid var(--leather);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vote-bar-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Rye', cursive;
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.countdown-timer {
+  font-family: 'Rye', cursive;
+  font-size: 3rem;
+  color: var(--rust);
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Winner selection */
+.winner-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.winner-btn {
+  font-size: 1.3rem;
+  padding: 1.5rem 2.5rem;
+  min-width: 200px;
+}
+
+/* Score update animation */
+.score-update {
+  animation: scoreCount 0.6s ease;
+}
+
+/* Scoreboard */
+.scoreboard {
+  max-width: 900px;
+  margin: 1rem auto;
+}
+
+.scoreboard-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  border: 2px solid var(--leather);
+  background: var(--cream);
+  transition: all 0.5s ease;
+}
+
+.scoreboard-row .rank-num {
+  font-family: 'Rye', cursive;
+  font-size: 2rem;
+  min-width: 50px;
+  text-align: center;
+}
+
+.scoreboard-row .team-color-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--dark-wood);
+}
+
+.scoreboard-row .team-name {
+  flex: 1;
+  font-family: 'Rye', cursive;
+  font-size: 1.3rem;
+}
+
+.scoreboard-row .team-points {
+  font-family: 'Rye', cursive;
+  font-size: 1.8rem;
+  color: var(--gold);
+  text-shadow: 1px 1px 0 var(--dark-wood);
+}
+
+/* Blufshot */
+.blufshot-display {
+  text-align: center;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.shot-glasses {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.shot-glass {
+  width: 100px;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(200,200,200,0.5));
+  border: 3px solid var(--dark-wood);
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+  font-family: 'Rye', cursive;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.shot-glass:hover {
+  transform: scale(1.05);
+}
+
+.shot-glass.revealed-correct {
+  background: linear-gradient(to bottom, rgba(218,165,32,0.3), rgba(218,165,32,0.6));
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(218,165,32,0.5);
+}
+
+.shot-glass .guess-count {
+  position: absolute;
+  top: -30px;
+  font-size: 1.2rem;
+  color: var(--rust);
+}
+
+/* Final results */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 3rem auto;
+  max-width: 700px;
+}
+
+.podium-place {
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  padding: 1.5rem;
+  min-width: 180px;
+}
+
+.podium-place.first {
+  background: var(--gold);
+  height: 250px;
+  order: 2;
+}
+
+.podium-place.second {
+  background: #C0C0C0;
+  height: 200px;
+  order: 1;
+}
+
+.podium-place.third {
+  background: #CD7F32;
+  height: 160px;
+  order: 3;
+}
+
+.podium-place .podium-rank {
+  font-family: 'Rye', cursive;
+  font-size: 3rem;
+}
+
+.podium-place .podium-name {
+  font-family: 'Rye', cursive;
+  font-size: 1.3rem;
+  margin-top: 0.5rem;
+}
+
+.podium-place .podium-score {
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+/* Host controls bar */
+.host-controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--dark-wood);
+  border-top: 3px solid var(--gold);
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 50;
+}
+
+.host-controls .btn {
+  font-size: 0.9rem;
+  padding: 0.5rem 1.5rem;
+}
+
+/* Winkel / Duel overlays */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.overlay-content {
+  background: var(--parchment);
+  border: 6px double var(--dark-wood);
+  padding: 3rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  animation: popIn 0.4s ease;
+}
+
+.overlay-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Duel */
+.duel-teams {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+/* Padding for bottom controls */
+.host-main {
+  padding-bottom: 80px;
+}
