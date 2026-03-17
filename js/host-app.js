@@ -335,7 +335,7 @@ const hostApp = {
 
   // === BLUFSHOT ===
   async startBlufshot() {
-    this.blufMembers = GameState.getCompetingMembers();
+    this.blufMembers = GameState.getBlufRepresentatives();
     this.blufIndex = 0;
     await GameState.setPhase('blufshot');
     await this.showBlufParticipant(0);
