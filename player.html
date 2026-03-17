@@ -28,20 +28,32 @@
       </div>
     </div>
 
-    <!-- Team Name Input -->
+    <!-- Team Name Input (2-step: pick team, then enter name) -->
     <div id="teamName-section" class="phase-container">
       <div class="name-input-section">
-        <h2>Kies een Teamnaam!</h2>
-        <p class="mt-1">Overleg met je team en voer jullie naam in.</p>
-        <p style="font-size:0.85rem;opacity:0.8;margin-top:0.3rem;">⚠️ Eén persoon per team voert de naam in!</p>
-        <div class="mt-2">
-          <input type="text" id="teamNameInput" placeholder="Bijv. De Desperado's" maxlength="30">
+        <!-- Step 1: Pick your team number -->
+        <div id="namingStep1">
+          <h2>Welk team ben je?</h2>
+          <p class="mt-1">⚠️ Eén persoon per team voert de naam in!</p>
+          <p style="font-size:0.85rem;opacity:0.7;margin-top:0.3rem;">Klik op je teamnummer (kijk op het scherm).</p>
+          <div class="team-select-grid mt-2" id="namingTeamGrid"></div>
         </div>
-        <div class="mt-2">
-          <button class="btn btn-rust btn-block" onclick="playerApp.submitTeamName()">Bevestig Naam</button>
-        </div>
-        <div class="mt-2 hidden" id="nameConfirmed">
-          <p style="color:var(--saloon-green);font-weight:bold;">Teamnaam opgeslagen!</p>
+        <!-- Step 2: Enter team name -->
+        <div id="namingStep2" class="hidden">
+          <h2>Teamnaam voor <span id="namingTeamLabel"></span></h2>
+          <p class="mt-1">Overleg met je team en voer jullie naam in.</p>
+          <div class="mt-2">
+            <input type="text" id="teamNameInput" placeholder="Bijv. De Desperado's" maxlength="30">
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-rust btn-block" onclick="playerApp.submitTeamName()">Bevestig Naam</button>
+          </div>
+          <div class="mt-2 hidden" id="nameConfirmed">
+            <p style="color:var(--saloon-green);font-weight:bold;">✓ Teamnaam opgeslagen!</p>
+          </div>
+          <div class="mt-2">
+            <button class="btn" style="background:#666;font-size:0.85rem;" onclick="playerApp.backToTeamPick()">← Ander team</button>
+          </div>
         </div>
       </div>
     </div>

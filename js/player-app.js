@@ -89,12 +89,7 @@ const playerApp = {
         break;
 
       case 'teamNaming':
-        if (this.myTeam && !this.myTeam.name) {
-          this.showSection('teamName-section');
-        } else {
-          this.showSection('waiting-section');
-          this.setStatus('Teamnaam al gekozen!');
-        }
+        this.showTeamNaming();
         break;
 
       case 'wheel':
@@ -172,7 +167,73 @@ const playerApp = {
     `).join('');
   },
 
-  // === TEAM NAMING ===
+  // === TEAM NAMING (2-step) ===
+  namingTeamId: null,
+
+  showTeamNaming() {
+    // Check if any team still needs a name
+    const allNamed = GameState.teams.every(t => t.name);
+    if (allNamed) {
+      this.showSection('waiting-section');
+      this.setStatus('Alle teamnamen zijn gekozen!');
+      return;
+    }
+
+    this.showSection('teamName-section');
+    // Reset to step 1
+    document.getElementById('namingStep1').classList.remove('hidden');
+    document.getElementById('namingStep2').classList.add('hidden');
+    this.namingTeamId = null;
+
+    // Build team buttons for step 1
+    const grid = document.getElementById('namingTeamGrid');
+    grid.innerHTML = '';
+    GameState.teams.forEach(team => {
+      const btn = document.createElement('div');
+      btn.className = 'team-select-btn';
+      btn.style.backgroundColor = team.color;
+      if (team.name) {
+        // Already named — show as disabled
+        btn.innerHTML = `
+          <strong>${team.name}</strong>
+          <div class="team-members-small">${team.members.join(', ')}</div>
+          <div style="font-size:0.75rem;margin-top:0.3rem;opacity:0.7;">✓ Naam gekozen</div>
+        `;
+        btn.style.opacity = '0.5';
+        btn.style.pointerEvents = 'none';
+      } else {
+        btn.innerHTML = `
+          <strong>Team ${team.number}</strong>
+          <div class="team-members-small">${team.members.join(', ')}</div>
+        `;
+        btn.addEventListener('click', () => this.pickNamingTeam(team.id));
+      }
+      grid.appendChild(btn);
+    });
+  },
+
+  pickNamingTeam(teamId) {
+    this.namingTeamId = teamId;
+    const team = getTeamById(GameState.teams, teamId);
+
+    // Switch to step 2
+    document.getElementById('namingStep1').classList.add('hidden');
+    document.getElementById('namingStep2').classList.remove('hidden');
+    document.getElementById('namingTeamLabel').textContent = `Team ${team.number}`;
+    document.getElementById('namingTeamLabel').style.color = team.color;
+
+    // Reset input
+    const input = document.getElementById('teamNameInput');
+    input.value = '';
+    input.disabled = false;
+    document.getElementById('nameConfirmed').classList.add('hidden');
+  },
+
+  backToTeamPick() {
+    this.namingTeamId = null;
+    this.showTeamNaming();
+  },
+
   async submitTeamName() {
     const input = document.getElementById('teamNameInput');
     const name = input.value.trim();
@@ -180,7 +241,8 @@ const playerApp = {
       alert('Vul een teamnaam in!');
       return;
     }
-    await GameState.setTeamName(this.myTeamId, name);
+    const teamId = this.namingTeamId || this.myTeamId;
+    await GameState.setTeamName(teamId, name);
     document.getElementById('nameConfirmed').classList.remove('hidden');
     input.disabled = true;
   },
