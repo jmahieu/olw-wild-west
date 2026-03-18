@@ -14,11 +14,29 @@
       background:
         radial-gradient(ellipse at bottom, #d4a56a 0%, transparent 60%),
         linear-gradient(to bottom, #87CEEB 0%, #F4E8C1 50%, #d4a56a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 250px;
+      background: url('assets/images/landing_poster.jpg') center 33% / 150% no-repeat;
+      opacity: 0.2;
+      pointer-events: none;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%);
     }
     .landing {
       text-align: center;
       max-width: 600px;
       padding: 2rem;
+      position: relative;
+      z-index: 1;
     }
     .landing h1 {
       font-size: 3.5rem;
