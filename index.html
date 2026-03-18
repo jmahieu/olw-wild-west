@@ -6,60 +6,78 @@
   <title>OLW Wild West</title>
   <link rel="stylesheet" href="css/theme.css">
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
     body {
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(ellipse at bottom, #d4a56a 0%, transparent 60%),
-        linear-gradient(to bottom, #87CEEB 0%, #F4E8C1 50%, #d4a56a 100%);
+      flex-direction: column;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
-    body::before {
+    .face-spacer {
+      flex: 1 1 auto;
+      min-height: 25vh;
+      max-height: 50vh;
+    }
+    /* Full-screen photo background */
+    .bg-photo {
+      position: fixed;
+      inset: 0;
+      background: url('assets/images/landing_poster.jpg') center 20% / cover no-repeat;
+      z-index: 0;
+    }
+    @media (min-aspect-ratio: 4/3) {
+      .bg-photo {
+        background-position: center 30%;
+      }
+    }
+    /* Gradient: transparent at top (faces), dark at bottom (text) */
+    .bg-photo::after {
       content: '';
       position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 300px;
-      height: 250px;
-      background: url('assets/images/landing_poster.jpg') center 33% / 150% no-repeat;
-      opacity: 0.2;
-      pointer-events: none;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%);
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%);
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.10) 35%,
+        rgba(20,10,5,0.65) 60%,
+        rgba(20,10,5,0.88) 100%
+      );
     }
     .landing {
-      text-align: center;
-      max-width: 600px;
-      padding: 2rem;
       position: relative;
       z-index: 1;
+      text-align: center;
+      padding: 2.5rem 2rem 3rem;
     }
     .landing h1 {
       font-size: 3.5rem;
-      color: #8B0000;
-      text-shadow: 4px 4px 0 #3E2723;
-      margin-bottom: 0.5rem;
+      color: #F4E8C1;
+      text-shadow: 3px 3px 0 #3E2723, 0 0 20px rgba(0,0,0,0.8);
+      margin-bottom: 0.4rem;
     }
     .landing .subtitle {
       font-family: 'Rye', cursive;
       font-size: 1.3rem;
-      color: #8B4513;
-      margin-bottom: 2.5rem;
+      color: #DAA520;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
     }
     .role-buttons {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       gap: 1.5rem;
-      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     .role-btn {
-      width: 280px;
-      padding: 1.5rem 2rem;
-      font-size: 1.4rem;
+      width: 240px;
+      padding: 1.3rem 1.5rem;
+      font-size: 1.3rem;
     }
     .role-btn .role-desc {
       display: block;
@@ -68,18 +86,29 @@
       text-transform: none;
       letter-spacing: 0;
       margin-top: 0.3rem;
-      opacity: 0.8;
+      opacity: 0.85;
     }
     .outlaw-text {
       font-family: 'Rye', cursive;
-      font-size: 1rem;
-      color: #3E2723;
-      margin-top: 2rem;
-      opacity: 0.6;
+      font-size: 0.95rem;
+      color: #DAA520;
+      margin-top: 1.5rem;
+      opacity: 0.7;
+    }
+    @media (max-width: 480px) {
+      .face-spacer { min-height: 30vh; max-height: 45vh; }
+      .landing { padding: 1.2rem 1.5rem 1.5rem; }
+      .landing h1 { font-size: 2.2rem; margin-bottom: 0.2rem; }
+      .landing .subtitle { font-size: 1.1rem; margin-bottom: 1rem; }
+      .role-buttons { flex-direction: column; align-items: center; gap: 0.8rem; }
+      .role-btn { width: 260px; padding: 0.9rem 1.5rem; font-size: 1.2rem; }
+      .outlaw-text { margin-top: 0.8rem; font-size: 0.85rem; }
     }
   </style>
 </head>
 <body>
+  <div class="bg-photo"></div>
+  <div class="face-spacer"></div>
   <div class="landing">
     <h1>OLW Wild West</h1>
     <p class="subtitle">Sheriffs vs Outlaws</p>
