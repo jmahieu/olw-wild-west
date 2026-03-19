@@ -1,21 +1,20 @@
 // === Team Management ===
 
 const ALL_PARTICIPANTS = [
-  'Anaïs', 'Anneleen', 'Arseen', 'Hernot', 'Jan',
-  'Janne', 'Leen VDA', 'Lenard', 'Lien', 'Linde',
-  'Maaike', 'Mieke', 'Orinda', 'Ruud', 'Saartje',
+  'Anaïs', 'Anneleen', 'Arseen', 'Jan',
+  'Janne', 'Leen VDA', 'Lenard', 'Lien',
+  'Maaike', 'Orinda', 'Ruud', 'Saartje',
   'Simon', 'Stijn', 'Tim', 'Velleke', 'Zana'
 ];
 
-const TEAM_SIZES = [3, 3, 3, 3, 4, 4]; // 4 teams of 3, 2 teams of 4
+const TEAM_SIZES = [3, 3, 3, 4, 4]; // 3 teams of 3, 2 teams of 4 = 17
 
 const TEAM_COLORS = [
   { bg: '#C1440E', name: 'Roest' },
   { bg: '#2E5339', name: 'Saloon Groen' },
   { bg: '#4A6FA5', name: 'Hemelblauw' },
   { bg: '#DAA520', name: 'Goud' },
-  { bg: '#7B2D8E', name: 'Paars' },
-  { bg: '#1A5276', name: 'Donkerblauw' }
+  { bg: '#7B2D8E', name: 'Paars' }
 ];
 
 // Fisher-Yates shuffle
@@ -60,11 +59,12 @@ function rankTeams(teams) {
     .map(t => t.id);
 }
 
-// Get bottom 3 (competing) and top 3 (saloon)
+// Get bottom 3 (competing) and top 2 (saloon)
 function splitTeams(teams) {
   const ranked = rankTeams(teams);
+  const numCompeting = 3;
   return {
-    saloon: ranked.slice(0, 3),    // top 3
-    competing: ranked.slice(3, 6)  // bottom 3
+    saloon: ranked.slice(0, ranked.length - numCompeting),
+    competing: ranked.slice(ranked.length - numCompeting)
   };
 }

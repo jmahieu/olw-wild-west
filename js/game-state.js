@@ -82,8 +82,9 @@ const GameState = {
     if (this.round === 1) {
       // First round: random split (all teams are at 0)
       const shuffled = shuffle(this.teams.map(t => t.id));
-      this.saloonTeams = shuffled.slice(0, 3);
-      this.competingTeams = shuffled.slice(3, 6);
+      const numCompeting = 3;
+      this.saloonTeams = shuffled.slice(0, shuffled.length - numCompeting);
+      this.competingTeams = shuffled.slice(shuffled.length - numCompeting);
     } else {
       const split = splitTeams(this.teams);
       this.saloonTeams = split.saloon;
